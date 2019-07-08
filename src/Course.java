@@ -49,26 +49,44 @@ public class Course {
         return this.numOnWaitlist;
     }
 
-    public boolean addStudent(Student student) {
-        /*
-        TODO:
-        a student is eligible to add the course if:
-        - they have paid tuition
-        - they are not already enrolled on the roster or waitlist
+public boolean addStudent(Student student) {
 
-        if a student is eligible to add:
-        - if there is room on the roster, add the student to the roster
-        - if the roster is full but there is room on the waitlist, add the student to the waitlist
-        - if there is no room on the roster or waitlist, do not add the student
+     	int rosterSize = Arrays.asList(roster).size();
+    	int waitlistSize = Arrays.asList(waitlist).size();
+    	
+    	if (!student.isTuitionPaid()) { 
+    		return false; 
+    	} //end if 
 
-        return true or false based on whether the student is added or not
-        - if a student is added to either the roster or the waitlist, the method should return true
+    	if (rosterSize == 0) {
+    		for (Student onRoster: roster) { 
+    			if (onRoster.getID().equalsIgnoreCase(student.getID())) {
+    				return false; 
+    			} //end ifi
+    		} //end for each
+    	} //end if
 
-        Change numOnRoster and numOnWaitlist accordingly
-        */
+    	if (waitlistSize == 0) { 
+    		for (Student onWaitlist: waitlist) {
+    			if (onWaitlist.getID().equalsIgnoreCase(student.getID())) {
+    				return false;
+    			} //end if
+    		} //end for each
+    	} //end if
 
-        return true;
-    }
+    	if (numOnRoster < maxRosterStudents) {
+       		roster[numOnRoster] = student; 
+    		this.numOnRoster++;return true; 
+    	} else if (numOnWaitlist < maxWaitlistStudents) {
+    		waitlist[numOnWaitlist] = student; 
+    		this.numOnWaitlist++; 
+    		return true; 
+    	} else {
+    		return false; 
+ 	} //end if
+} // end addStudent method  
+  
+
 
     public boolean dropStudent(Student student){
         /*
